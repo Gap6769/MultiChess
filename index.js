@@ -4,13 +4,14 @@ const path = require('path');
 const session = require('express-session');
 const app = express();
 const bodyParser = require('body-parser');
+
 const methodOverride = require('method-override');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(express.static("public/css"));
-app.use(express.static("public/image"));
+app.use(express.static("public/images"));
 app.use(express.static("public/js"));
 app.use(express.static("public"));
 
@@ -57,3 +58,13 @@ app.get("/", (req,res) => {
 
 // req. [send(para enviar texto) | sendFile(para enviar archivos) |
 // render(para renderizar una vista por ejemplo ejs)]
+
+
+/*
+IDEAS:
+    - upload image and take pos of items with it lucas puto
+    - light dark mode
+    - download levels and sublevels, add a pop up to this, give keys to youtubers and other teachers so 
+        they have no pop up download
+    - 
+*/

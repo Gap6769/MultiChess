@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        /*
+        each level will have 4 buttons, 1 with - to delete itself and all childs
+        1 with the name of the level, to show the current chess position
+        1 with + to add a new sub level to the current level
+        1 with - at the end to delete the last sub level
+        */
+    </script>
+
+        <button onclick="add(01)">01</button>
+
+        
+</body>
+</html>
+
+<script>
+    function add(value){
+        var btn = document.createElement("button");
+        btn.innerHTML = value + 1; 
+        btn.onclick = function(){
+            add(value + 1);
+        }
+        document.body.appendChild(btn);
+    }
+</script>
+    <!--<button id="0" onclick="$(this).clone().appendTo('#onlyHere')">duplicate</button>-->
