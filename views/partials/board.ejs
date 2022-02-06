@@ -1,3 +1,26 @@
-<div id="myBoard" style="width: 60%"></div>
+<html>
+
+<head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+        <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+        <link rel="stylesheet" href="chessboard-arrows.css">
+        <script src="chessboard-arrows.js"></script>
+</head>
+
+<body>
+        <div id="board_wrapper">
+                <canvas id="primary_canvas" width="392" height="392"></canvas>
+                <canvas id="drawing_canvas" width="392" height="392"></canvas>
+                <div id="myBoard" style="width: 400px; height: 400px;"></div>
+        </div>
+</body>
 
 <button id="setStartBtn">Start Position</button>
+<script>
+        var overlay = new ChessboardArrows('board_wrapper')
+        var board = Chessboard('myBoard', 'start')
+</script>
+
+</html>
