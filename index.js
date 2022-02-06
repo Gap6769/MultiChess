@@ -66,5 +66,6 @@ IDEAS:
     - light dark mode
     - download levels and sublevels, add a pop up to this, give keys to youtubers and other teachers so 
         they have no pop up download
+    - challenges y un sistema para compartir las soluciones
     - 
 */

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <script>
+        /*
+        each level will have 4 buttons, 1 with - to delete itself and all childs
+        1 with the name of the level, to show the current chess position
+        1 with + to add a new sub level to the current level
+        1 with - at the end to delete the last sub level
+        */
+    </script>
+
+    <button id="add_level_0"> add basic level</button>
+    <div id="mainHolder">
+        <ol style="list-style-type: none">
+            <li>
+                <button id="view_level" name="1">1</button>
+                <button id="add_level">+</button>
+                <button id="del_level">-</button>
+            </li>
+        </ol>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    // on click take the parent, take the children "ol" and add a new <li>
+    // on click if parent doesnt have "ol" create a new one inside the parent
+    function formNewLevel(levelValue) {
+        levelValue = levelValue + "-1"
+
+        return '<ol style="list-style-type: none"><li><button id="view_level" name="' + levelValue
+            + '">' + levelValue + '</button> <button id="add_level">+</button> <button id="del_level">-</button></li></ol>'
+    }
+
+    function formNewSubLevel(levelValue) {
+
+        return '<li><button id="view_level" name="' + levelValue
+            + '">' + levelValue + '</button> <button id="add_level">+</button> <button id="del_level">-</button></li>'
+    }
+    $(document).ready(function () {
+        $("#mainHolder").on("click", "#add_level", function () {
+
+            if ($(this).parent().has("ol").length) {
+
+                let finalValue = $(this).parent().children("button").first().attr("name") + "-" + parseInt($(this).parent().children("ol").children("li").length + 1)
+                
+                $(this).parent().children("ol").first().append(formNewSubLevel(finalValue))
+
+
+            } else {
+                $(this).parent().not(":has('ol')").append(formNewLevel($(this).parent().children("button").first().attr("name")))
+            }
+
+        })
+        $("body").on("click", "#add_level_0", function () {
+            let basicLevelHtml = '<ol  style="list-style-type: none"><li><button id="view_level" name="1">1</button> <button id="add_level">+</button> <button id="del_level">-</button></li></ol>'
+
+            $(basicLevelHtml).appendTo("#mainHolder")
+        })
+    });
+</script>
