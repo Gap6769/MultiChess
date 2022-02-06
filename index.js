@@ -62,7 +62,7 @@ app.get("/", (req,res) => {
 
 /*
 IDEAS:
-    - upload image and take pos of items with it lucas puto
+    - upload image and take pos of items with it
     - light dark mode
     - download levels and sublevels, add a pop up to this, give keys to youtubers and other teachers so 
         they have no pop up download
