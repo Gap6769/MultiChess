@@ -11,15 +11,21 @@ const cors = require('cors');
 app.use(cors());
 
 
-const { createServer } = require("http");
+const { createServer } = require("https");
 const { Server } = require("socket.io");
-const httpServer = createServer(app);
-const io = new Server(httpServer, { cors: {
+const httpsServer = createServer(app);
+const options = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+  };
+const io = new Server(httpsServer, { cors: {
     "origin": "*",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204
   } });
+
+httpsServer.createServer(options, app);
 
 
 app.set('views', path.join(__dirname, 'views'));
