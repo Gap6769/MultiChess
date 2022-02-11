@@ -8,10 +8,12 @@ const methodOverride = require('method-override');
 const cors = require('cors');
 
 
+
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
+const io = new Server(httpServer, { cors: {
+  } });
 
 
 app.set('views', path.join(__dirname, 'views'));
