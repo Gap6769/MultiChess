@@ -6,27 +6,21 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const cors = require('cors');
-const fs = require('fs');
+var https = require('https');
+var http = require('http');
+var fs = require('fs');
 
-// fix cors
-app.use(cors());
-
-
-const { createServer } = require("https");
-const { Server } = require("socket.io");
-const httpsServer = createServer(app);
-const options = {
+var options = {
     key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('cert.pem')
   };
-const io = new Server(httpsServer, { cors: {
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
-  } });
 
-httpsServer.createServer(options, app);
+
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+const httpsServer = https.createServer(options, app);
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -72,7 +66,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-    httpsServer.listen(3000);
+    httpServer.listen(3000);
+    httpsServer.listen(3001);
 
 
 
