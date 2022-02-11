@@ -7,12 +7,18 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const cors = require('cors');
 
+// fix cors
+app.use(cors());
 
 
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: {
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
   } });
 
 
