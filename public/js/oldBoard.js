@@ -5,6 +5,7 @@ var $fen = $('#fen')
 var $pgn = $('#pgn')
 var possitionFen = game.fen()
 
+
 // config for drag and drop freely
 function dragAndDrop(posFen) {
     var freelyConfig = {

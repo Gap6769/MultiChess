@@ -1,4 +1,5 @@
 
+
 var game = new Chess();
 
 var board = Chessboard('myBoard', {
@@ -13,6 +14,30 @@ var board = Chessboard('myBoard', {
 })
 
 $(window).resize(board.resize)
+
+function dragAndDrop(posFen) {
+  var freelyConfig = {
+    draggable: true,
+    dropOffBoard: 'trash',
+
+    position: posFen
+  }
+  return freelyConfig
+}
+
+// config for drag and drop only legal moves
+function legalOnly(posFen = possitionFen) {
+  var configLegalOnly = {
+    draggable: true,
+    position: posFen,
+    onDragStart: onDragStart,
+    onDrop: onDrop,
+    onSnapEnd: onSnapEnd,
+    dropOffBoard: 'trash',
+
+  }
+  return configLegalOnly
+}
 
 // start btn 
 document.querySelector('#setStartBtn').addEventListener('click', () => {
@@ -102,7 +127,7 @@ function getFen() {
   return game.fen()
 }
 
-function getPGN(){
+function getPGN() {
   return game.pgn()
 }
 // Function to load FEN into the game
@@ -112,17 +137,54 @@ function setFen(fen) {
   // update the board in the chess api (the logic)
   board.position(fen)
 }
-  $('#generateFen').on('click', function () {
-    $('#fenExport').val(getFen())
-    $('#pgnExport').val(getPGN())
-  })
+$('#generateFen').on('click', function () {
+  console.log('FEN: ' + getFen())
+  $('#fenExport').val(getFen())
+  $('#pgnExport').val(getPGN())
+})
 
 
 $('#importFen').on('click', function () {
-    fen = $('#fenInput').val()
+  fen = $('#fenInput').val()
 
-    console.log(game.pgn())
-    setFen(`${fen}`)
-  
-  })
-  
+  console.log(game.pgn())
+  setFen(`${fen}`)
+
+})
+
+
+// esto no esta andando:
+
+$('#legalMoves').on('click', function () {
+  // evento que inicia al presionar el boton, imprimer el current fen en consola
+  console.log('Start fen on click is' + game.fen())
+
+  // si luego de apretarlo el boton esta marcado entonces ejecuta esto:
+  if ($('#legalMoves').prop('checked') === true) {
+    // asigna el fen actual a la variable current_fen
+    current_fen = getFen()
+    // imprime el fen
+    console.log('legal moves fen is ' + current_fen)
+    // Actualiza la api visual con el fen actual (legal only config y variable es la posicion start)
+    board = ChessBoard('myBoard', legalOnly(current_fen))
+    // actualiza la api de logica con el fen actual
+    game.load(current_fen)
+
+  }
+  // si luego del click el boton no esta marcado entonces ejecuta esto:
+  else {
+    // asigna el fen actual a la variable current_fen
+    current_fen = getFen()
+    console.log('freely')
+    // actualiza la api visual con el fen actual (freely config y variable es la posicion start)
+    board = ChessBoard('myBoard', dragAndDrop(current_fen))
+    // actualiza la api de logica con el fen actual
+    game.load(current_fen)
+    // log de fen actual (este no se actualiza, por lo que al volver a solo movimientos legales
+    // se mantiene el fen anterior, es decir la partida no avanza.)
+    console.log('drag and drop fen is:' + current_fen)
+
+
+
+  }
+})
