@@ -5,6 +5,7 @@ const session = require('express-session');
 const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const cors = require('cors');
 
 
 const { createServer } = require("http");
