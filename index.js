@@ -6,6 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const cors = require('cors');
+const fs = require('fs');
 
 // fix cors
 app.use(cors());
@@ -71,7 +72,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-    httpServer.listen(3000);
+    httpsServer.listen(3000);
 
 
 
