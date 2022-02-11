@@ -6,6 +6,33 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const methodOverride = require('method-override');
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({ port: 8082 });
+
+wss.getUniqueID = function () {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+    return s4() + s4() + '-' + s4();
+};
+
+wss.on("connection", ws => {
+    ws.id = wss.getUniqueID();
+    console.log(`New client connected with id: ${ws.id}`);
+
+    ws.onmessage = ({data}) => {
+        console.log(`Client ${ws.id}: ${data}`);
+        wss.clients.forEach(function each(client) {
+            if (client !== ws && client.readyState === WebSocket.OPEN) {
+                client.send(`${data}`);
+            }
+        });
+    };
+
+    ws.onclose = function() {
+        console.log(`Client ${ws.id} has disconnected!`);
+    };
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -32,11 +59,10 @@ app.get("/", (req,res) => {
     res.render("home")
 })
 
+
+app.listen(8082, () => { console.log('Server started at port 3000'); });
 app.get("/chat", (req,res) => {
     res.render("chat")
-})
-
-
 
 // app.get <- dentro de app le hicieron un GET request (que no es lo mismo que un POST request)
 // un post se veria como app.post
