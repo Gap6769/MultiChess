@@ -63,6 +63,7 @@ app.get("/", (req,res) => {
 app.listen(8082, () => { console.log('Server started at port 3000'); });
 app.get("/chat", (req,res) => {
     res.render("chat")
+})
 
     //gap
 // app.get <- dentro de app le hicieron un GET request (que no es lo mismo que un POST request)
