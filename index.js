@@ -51,7 +51,8 @@ io.on('connection', function(socket) {
 );
 
 const corsOptions = {
-    origin: "*",
+    origin: "",
+   'Access-Control-Allow-Origin': '',
 };
 app.use(cors(corsOptions));
 
