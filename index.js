@@ -4,7 +4,7 @@ const path = require('path');
 const session = require('express-session');
 const app = express();
 const bodyParser = require('body-parser');
-
+const methodOverride = require('method-override');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
