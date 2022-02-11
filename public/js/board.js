@@ -1,28 +1,28 @@
 
-const game = new Chess();
+var game = new Chess();
 
 var board = Chessboard('myBoard', {
-    draggable: true,
-    dropOffBoard: 'trash',
-    position: 'start',
-    onDragStart: onDragStart,
-    onDrop: onDrop,
-    onMouseoutSquare: onMouseoutSquare,
-    onMouseoverSquare: onMouseoverSquare,
-    onSnapEnd: onSnapEnd
+  draggable: true,
+  dropOffBoard: 'trash',
+  position: 'start',
+  onDragStart: onDragStart,
+  onDrop: onDrop,
+  onMouseoutSquare: onMouseoutSquare,
+  onMouseoverSquare: onMouseoverSquare,
+  onSnapEnd: onSnapEnd
 })
 
 $(window).resize(board.resize)
 
 // start btn 
 document.querySelector('#setStartBtn').addEventListener('click', () => {
-    board.start();
+  board.start();
 });
 
 // turn board white - black
 $('#whiteBlack').on('click', function () {
-    $('#fwhiteBlackCheck').prop('checked', false)
-    board.flip()
+  $('#fwhiteBlackCheck').prop('checked', false)
+  board.flip()
 })
 
 
@@ -30,11 +30,11 @@ $('#whiteBlack').on('click', function () {
 var whiteSquareGrey = '#a9a9a9'
 var blackSquareGrey = '#696969'
 
-function removeGreySquares () {
+function removeGreySquares() {
   $('#myBoard .square-55d63').css('background', '')
 }
 
-function greySquare (square) {
+function greySquare(square) {
   var $square = $('#myBoard .square-' + square)
 
   var background = whiteSquareGrey
@@ -45,7 +45,7 @@ function greySquare (square) {
   $square.css('background', background)
 }
 
-function onDragStart (source, piece) {
+function onDragStart(source, piece) {
   // do not pick up pieces if the game is over
   if (game.game_over()) return false
 
@@ -56,7 +56,7 @@ function onDragStart (source, piece) {
   // }
 }
 
-function onDrop (source, target) {
+function onDrop(source, target) {
   removeGreySquares()
 
   // see if the move is legal
@@ -70,7 +70,7 @@ function onDrop (source, target) {
   // if (move === null) return 'snapback'
 }
 
-function onMouseoverSquare (square, piece) {
+function onMouseoverSquare(square, piece) {
   // get list of possible moves for this square
   var moves = game.moves({
     square: square,
@@ -89,10 +89,40 @@ function onMouseoverSquare (square, piece) {
   }
 }
 
-function onMouseoutSquare (square, piece) {
+function onMouseoutSquare(square, piece) {
   removeGreySquares()
 }
 
-function onSnapEnd () {
+function onSnapEnd() {
   board.position(game.fen())
 }
+
+// Functions to get FEN and PGN from the chessboard api
+function getFen() {
+  return game.fen()
+}
+
+function getPGN(){
+  return game.pgn()
+}
+// Function to load FEN into the game
+function setFen(fen) {
+  // update the chessboard visual
+  game.load(fen)
+  // update the board in the chess api (the logic)
+  board.position(fen)
+}
+  $('#generateFen').on('click', function () {
+    $('#fenExport').val(getFen())
+    $('#pgnExport').val(getPGN())
+  })
+
+
+$('#importFen').on('click', function () {
+    fen = $('#fenInput').val()
+
+    console.log(game.pgn())
+    setFen(`${fen}`)
+  
+  })
+  
