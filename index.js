@@ -64,6 +64,7 @@ app.listen(8082, () => { console.log('Server started at port 3000'); });
 app.get("/chat", (req,res) => {
     res.render("chat")
 
+    //gap god
 // app.get <- dentro de app le hicieron un GET request (que no es lo mismo que un POST request)
 // un post se veria como app.post
 // un endpoint puede tener tanto get como post, y dependiendo de que se este usando, se puede
