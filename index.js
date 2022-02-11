@@ -6,6 +6,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
+
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -24,26 +31,39 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.listen(3000, () => { console.log('Server started at port 3000'); });
 
-app.get("/", (req,res) => {
+app.get("/", (req, res) => {
     // renderizar la vista home.ejs
     res.render("home")
-
-app.get("/chat", (req,res) => {
-    res.render("chat")
-})
 });
+
+app.get("/index", (req, res) => {
+    // renderizar la vista home.ejs
+    res.render("/Users/ibrun/Desktop/Copia de MultiChess/index.ejs")
+});
+io.on('connection', function(socket) {
+    socket.on('fen', function(data) {
+        console.log(data);
+        io.emit('fen', data);
+    });
+}
+);
+
+
+    httpServer.listen(3000);
+
+
+
     //gap
 // app.get <- dentro de app le hicieron un GET request (que no es lo mismo que un POST request)
 // un post se veria como app.post
 // un endpoint puede tener tanto get como post, y dependiendo de que se este usando, se puede
 // ejecutar una u otra cosa
 // app.get("/prueba"..){
-    //res.send("hiciste un get a /prueba") <- "res.send" envia un texto al usuario 
+    //res.send("hiciste un get a /prueba") <- "res.send" envia un texto al usuario
 //}
 // app.post("/prueba"...){
-    //res.send("hiciste un post a /prueba") <- "res.send" envia un texto al usuario 
+    //res.send("hiciste un post a /prueba") <- "res.send" envia un texto al usuario
 //}
 
 // app.get("/") <- "/"

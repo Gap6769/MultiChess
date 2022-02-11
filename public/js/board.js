@@ -1,7 +1,7 @@
 
 
 var game = new Chess();
-
+var socket = io();
 var board = Chessboard('myBoard', {
   draggable: true,
   dropOffBoard: 'trash',
@@ -80,6 +80,12 @@ function onDragStart(source, piece) {
   //   return false
   // }
 }
+function function1() {
+  console.log('this is running')
+  tempFen = getFen()
+  socket.emit('fen', tempFen)
+}
+
 
 function onDrop(source, target) {
   removeGreySquares()
@@ -91,9 +97,14 @@ function onDrop(source, target) {
     promotion: 'q' // NOTE: always promote to a queen for example simplicity
   })
 
+  //programar aca on drop emit
+  function1()
+
   // illegal move
   // if (move === null) return 'snapback'
 }
+
+
 
 function onMouseoverSquare(square, piece) {
   // get list of possible moves for this square
@@ -187,4 +198,12 @@ $('#legalMoves').on('click', function () {
 
 
   }
+})
+
+
+
+
+socket.on('fen', function (data) {
+  console.log(data)
+  setFen(data)
 })

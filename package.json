@@ -24,6 +24,11 @@
     "express-session": "^1.17.2",
     "method-override": "^3.0.0",
     "path": "^0.12.7",
+    "socket.io": "^4.4.1",
     "ws": "^8.5.0"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.6",
+    "utf-8-validate": "^5.0.8"
   }
 }
