@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 const methodOverride = require('method-override');
 const WebSocket = require("ws");
-const wss = new WebSocket.Server({ port: 3032 });
+const wss = new WebSocket.Server({ port: 3000 });
 
 wss.getUniqueID = function () {
     function s4() {
@@ -57,10 +57,7 @@ app.listen(3000, () => { console.log('Server started at port 3000'); });
 app.get("/", (req,res) => {
     // renderizar la vista home.ejs
     res.render("home")
-})
 
-
-app.listen(3032, () => { console.log('Server started at port 3000'); });
 app.get("/chat", (req,res) => {
     res.render("chat")
 })
