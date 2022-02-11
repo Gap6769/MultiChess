@@ -61,7 +61,7 @@ app.get("/", (req,res) => {
 app.get("/chat", (req,res) => {
     res.render("chat")
 })
-
+});
     //gap
 // app.get <- dentro de app le hicieron un GET request (que no es lo mismo que un POST request)
 // un post se veria como app.post
