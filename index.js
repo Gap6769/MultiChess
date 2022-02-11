@@ -49,6 +49,11 @@ io.on('connection', function(socket) {
 }
 );
 
+const corsOptions = {
+    origin: "*",
+};
+app.use(cors(corsOptions));
+
 
     httpServer.listen(3000);
 
