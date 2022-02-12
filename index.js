@@ -6,21 +6,12 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const cors = require('cors');
-var https = require('https');
-var http = require('http');
-var fs = require('fs');
-
-var options = {
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('cert.pem')
-  };
 
 
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const io = new Server(httpServer, { /* options */ });
-const httpsServer = https.createServer(options, app);
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -67,7 +58,6 @@ app.use(cors(corsOptions));
 
 
     httpServer.listen(3000);
-    httpsServer.listen(3001);
 
 
 
